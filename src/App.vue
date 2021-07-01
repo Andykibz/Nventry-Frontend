@@ -1,9 +1,11 @@
 <template>
   <div id="nav">
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> | 
     <router-link :to="{ name: 'PersonEntry' }">Register</router-link> |
-    <router-link :to="{ name: 'ActivityEntry' }">Activity</router-link>
+    <router-link :to="{ name: 'ActivityEntry' }">Activity</router-link> |
+    <router-link :to="{ name: 'ComponentModelEntry' }">Component Model</router-link> |
+    <router-link :to="{ name: 'ComponentEntry' }">Component</router-link> |
+    <router-link :to="{ name: 'BorrowEntry' }">Borrow</router-link>
   </div>
   <router-view/>
 </template>

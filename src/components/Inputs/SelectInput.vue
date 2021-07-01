@@ -10,8 +10,8 @@
           v-model="value"
           :options="options"
           mode="single"
-          searchable=true
-          :placeholder=placeholder
+          :searchable="searchable"
+          :placeholder="placeholder"
         />
   </div>
 </template>
@@ -24,7 +24,7 @@ export default defineComponent({
         placeholder : String,
         label       : String,
         options     : Array,
-
+        searchable  : Boolean,
     },
     components: {
         Multiselect,

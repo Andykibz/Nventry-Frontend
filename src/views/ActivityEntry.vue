@@ -17,10 +17,9 @@ of time. An excercise is similar to projects but are more short term.
         <div id="wrapper" class="col-xs-12 col-sm-11 col-md-9 col-lg-7 mx-auto">
             <h3>Activity Entry</h3>
             <hr>
-
             <TextInput placeholder="Title of Activity" label="Title" type="text"/>
-            <SelectInput placeholder="Type of Activity eg. Project" label="Type" :options="['Exercise', 'Project']"/>
-            <MultiValueInput label="Participants" placeholder="Activity Participants" />
+            <SelectInput placeholder="Type of Activity eg. Project" label="Type" :searchable="false" :options="['Exercise', 'Project']"/>
+            <MultiValueInput label="Participants" placeholder="Activity Participants" :searchable="true"/>
             <WyswygInput placeholder="Details of the Activity" label="Description"/>
             <div class="row">
                 <div class="col-md-6">

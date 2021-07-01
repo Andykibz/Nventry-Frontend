@@ -5,8 +5,8 @@
           v-model="value"
           :options="options"
           mode="tags"
-          searchable=true
-          :placeholder=placeholder
+          :searchable="searchable"
+          :placeholder="placeholder"
     />
   </div>
 </template>
@@ -18,6 +18,8 @@
     props:{
         placeholder : String,
         label       : String,
+        searchable  : Boolean,
+        options     : Array,
     },
     components: {
       Multiselect,
@@ -25,13 +27,6 @@
     data() {
       return {
         value: null,
-        options: [
-          'Batman',
-          'Robin',
-          'Joker',
-          'Andrew',
-          'Bosco',
-        ]
       }
     }
   }
