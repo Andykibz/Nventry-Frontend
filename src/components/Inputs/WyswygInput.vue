@@ -53,7 +53,8 @@
         </div>
 
       </div>
-      <editor-content class="rounded shadow py-2 px-3" :editor="editor" />
+      <editor-content class="rounded shadow py-2 px-3" 
+          :editor="editor"/>
     </div>
 </div>
 </template>
@@ -65,9 +66,13 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import Placeholder from '@tiptap/extension-placeholder'
 
 export default {
-  props:{
-        placeholder : String,
-        label       : String,
+    props: {
+      placeholder : String,
+      label       : String,
+      wyswygValue: {
+        type: String,
+        default: '',
+      },
     },
   components: {
     EditorContent,
@@ -81,12 +86,28 @@ export default {
 
   mounted() {
     this.editor = new Editor({
+      content: this.wyswygValue,
       extensions: [
         StarterKit,
-        Placeholder
       ],
-      content: ``,      
+      onUpdate: () => {
+        this.$emit('update:wyswygValue', this.editor.getHTML())
+      },
     })
+  },
+
+
+  watch: {
+    wyswygValue(value) 
+    {
+      const isSame = this.editor.getHTML() === value
+
+      if (isSame) {
+        return
+      }
+
+      this.editor.commands.setContent(this.wyswygValue, false)
+    },
   },
 
   beforeDestroy() {

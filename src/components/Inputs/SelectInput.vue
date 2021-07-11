@@ -6,12 +6,11 @@
 <template>
   <div class="mb-3">
         <label :for="label+'-id'" class="lead form-label d-flex flex-start">{{ label }}</label>
-        <Multiselect
-          v-model="value"
+        <Multiselect v-model="value"
+          @select="(event)=>$emit('update:SelectValue', value)"
           :options="options"
           mode="single"
-          :searchable="searchable"
-          :placeholder="placeholder"
+          :searchable="searchable" :placeholder="placeholder"
         />
   </div>
 </template>
@@ -25,14 +24,14 @@ export default defineComponent({
         label       : String,
         options     : Array,
         searchable  : Boolean,
+        SelectValue : String,
     },
     components: {
         Multiselect,
     },
     data() {
         return {
-            value: null,
-
+            value   : null,
         }
     },
     setup() {
