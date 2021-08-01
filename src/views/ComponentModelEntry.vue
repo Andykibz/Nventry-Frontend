@@ -19,7 +19,7 @@
             <TextInput  placeholder="Name eg PLC s7-1214C DC/DC/DC" label="Component Name" v-model:TextValue="ComponentDetails.CmptName"/>
             <TextInput  placeholder="Datasheet Link" label="Datasheet" type="text" v-model:TextValue="ComponentDetails.Datasheet"/>
             <FileInput  placeholder="Upload Preview Image" label="Upload" v-model:TextValue="ComponentDetails.ImageName"/>
-            <TextAreaInput placeholder="Enter Description Here" label="Description" v-model:TextAreaValue="ComponentDetails.Description"/>
+            <WyswygInput v-model:wyswygValue="ComponentDetails.Description" placeholder="Enter Description Here" label="Description"/>
             <NumberInput placeholder="Total in Number" label="Total No." v-model:NumberValue="ComponentDetails.TotInNum"/>
             <NumberInput placeholder="Count in Stock" label="In Stock" v-model:NumberValue="ComponentDetails.CntInStk"/>
             <div class="row mb-3">                
@@ -45,16 +45,16 @@
 
 </template>
 <script lang="ts">
-import { Component, defineComponent, reactive, ref, toRefs } from 'vue'
+import { defineComponent, ref } from 'vue'
 import TextInput from '@/components/Inputs/TextInput.vue'; // @ is an alias to /src
 import NumberInput from '@/components/Inputs/NumberInput.vue';
 import FileInput from '@/components/Inputs/FileInput.vue';
-import TextAreaInput from '@/components/Inputs/TextAreaInput.vue';
+import WyswygInput from '@/components/Inputs/WyswygInput.vue';
 
 
 export default defineComponent({
     components: {
-        TextInput, NumberInput, FileInput, TextAreaInput
+        TextInput, NumberInput, FileInput, WyswygInput
     },
     setup() {
         

@@ -21,28 +21,36 @@
         <!-- <TextInput class="col-auto disabled" placeholder="Component Model Name"/> -->
         <div class="col component-label mt-2 d-flex justify-content-between">
           <span class="h5 mb-0"> {{ componentName }} </span> 
-          <button v-if="componentCount>0" class="btn btn-sm btn-outline-secondary">
-            <i class="bi bi-upc-scan"></i>
+          <button v-if="componentCount>componentIDs.length && showQrButton"
+              @click="showReader=true"
+              class="btn btn-sm btn-outline-secondary">
+                  <i class="bi bi-upc-scan"></i>
           </button>
         </div>
         <hr class="my-2"/>
+        <div class="d-grid mb-3 mx-3">
+            <button @click="$emit('update:componentCount', ( componentCount < 5 ) ? componentCount+1 : componentCount )" role="button" class="btn btn-sm btn-block btn-outline-dark"> <i class="bi bi-plus-lg"></i> </button>
+            <span class="component-quantity " style="font-size:x-large"> {{ componentCount }} </span>
+            <button @click="$emit('update:componentCount', ( componentCount > 1 ) ? componentCount-1 : componentCount )" role="button" class="btn btn-sm btn-outline-dark"> <i class="bi bi-dash-lg"></i> </button>
+        </div>
         <div class="IDsWrapper" ref="IDsWrapper">
-            <div class="input-group mb-3" :key="n" v-for="(n) in componentIDs">
-                <input :value="componentID[n]" type="text" class="form-control" placeholder="Component ID" aria-label="Recipient's username" aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2"> <i class="bi bi-upc-scan"></i>
+            <div class="border-bottom py-2 d-flex justify-content-between" :key="index" v-for="(compID, index) in componentIDs">
+                {{compID}}
+                <button role="button" @click="removeIndexedID(index)">
+                    <i class="bi bi-trash text-danger"></i>
                 </button>
             </div>          
         </div>
-        <div class="mb-3" >
-            <input :value="componentCount"
-                @input="(event)=>$emit('update:componentCount', +event.target.value)"
-                type="number" class="form-control" 
-                placeholder="How many.."/>
+
+        <div>
+            <qrcode-stream v-if="showReader" @decode="OnDecode" @init="onInit"></qrcode-stream>
         </div>
+
 </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
+import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue3-qrcode-reader'
 
 export default defineComponent({
   name: 'Borrow Component Entry',
@@ -50,7 +58,9 @@ export default defineComponent({
 
   },
   components: {
-    
+    QrcodeStream,
+    QrcodeDropZone,
+    QrcodeCapture
   },
   props:{
       componentName  : {
@@ -67,19 +77,61 @@ export default defineComponent({
   },
   data(){
       return{
-          filled  : 0,
+          filled        : 0,
+          decodedText   : "",
+          error         : "",
+          showReader    : false,
+          showQrButton  : true,
       }
   },
+  emits:{
 
+  },
   mounted(){
     // console.log(this.$refs.components);
     
     // this.$refs.components.open();
   },
+  // $emit('update:componentIDs', this.decodedText) => {},
 
   setup() {
-    
+     
   },
+  methods:{
+      OnDecode(_decoded : string) {
+        if( _decoded.length > 5  ){
+            this.decodedText = _decoded;
+            this.showReader = false;
+            // this.$emit('update:componentIDs', this.componentIDs?.push( this.decodedText ) )
+            this.componentIDs?.push( this.decodedText )
+        }          
+      },
+
+      async onInit (promise: unknown) {
+          try {
+              await promise
+          } catch (error) {
+            if (error.name === 'NotAllowedError') {
+                this.error = "ERROR: you need to grant camera access permisson"
+              } else if (error.name === 'NotFoundError') {
+                this.error = "ERROR: no camera on this device"
+              } else if (error.name === 'NotSupportedError') {
+                this.error = "ERROR: secure context required (HTTPS, localhost)"
+              } else if (error.name === 'NotReadableError') {
+                this.error = "ERROR: is the camera already in use?"
+              } else if (error.name === 'OverconstrainedError') {
+                this.error = "ERROR: installed cameras are not suitable"
+              } else if (error.name === 'StreamApiNotSupportedError') {
+                this.error = "ERROR: Stream API is not supported in this browser"
+              }
+          }
+      },
+
+      removeIndexedID(index : number){
+          this.componentIDs?.splice(index,1)
+          this.$emit('update:componentCount', this.componentCount-1 )          
+      }
+  }
 });
 </script>
 

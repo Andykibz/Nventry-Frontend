@@ -5,6 +5,7 @@ import ActivityEntry from '../views/ActivityEntry.vue'
 import ComponentModelEntry from '../views/ComponentModelEntry.vue'
 import ComponentEntry from '../views/ComponentEntry.vue'
 import BorrowEntry from '../views/BorrowEntry.vue'
+import ComponentList from '@/views/ComponentList.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -37,6 +38,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'BorrowEntry',
     component: BorrowEntry
   },
+  {
+    path: '/components',
+    name: 'ComponentList',
+    component: ComponentList
+  }
 
 ]
 

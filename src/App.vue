@@ -1,11 +1,9 @@
 <template>
   <div id="nav">
     <router-link to="/">Home</router-link> |
-    <router-link :to="{ name: 'PersonEntry' }">Register</router-link> |
-    <router-link :to="{ name: 'ActivityEntry' }">Activity</router-link> |
-    <router-link :to="{ name: 'ComponentModelEntry' }">Component Model</router-link> |
-    <router-link :to="{ name: 'ComponentEntry' }">Component</router-link> |
-    <router-link :to="{ name: 'BorrowEntry' }">Borrow</router-link>
+    <router-link to="{$">Login</router-link> |
+    <router-link :to="{ name: 'PersonEntry' }">Register</router-link> 
+    <!-- <router-link :to="{ name: 'ComponentEntry' }">Component</router-link> | -->
   </div>
   <router-view/>
 </template>
@@ -27,7 +25,7 @@
     color: #2c3e50;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #0dcaf0;
     }
   }
 }
