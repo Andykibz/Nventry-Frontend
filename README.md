@@ -1,4 +1,5 @@
 # nventry
+Nventry is an Inventory Management tailored for Training Institutions. Nvetry can also be used for Maintenance, Repair and Operations Inventory Management
 
 ## Project setup
 ```
